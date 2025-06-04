@@ -1,10 +1,10 @@
-import os
 from datetime import datetime, timezone
 from app.services.firebase_service import firestore_db
 from app.core.logger import logger
+from app.utils.environment import is_testing_mode
 
 # Ortam kontrolü
-TESTING = os.getenv("TESTING") == "1"
+TESTING = is_testing_mode()
 if TESTING:
     logger.info("FIREBASE TESTING: True")
 else:

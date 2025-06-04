@@ -1,8 +1,11 @@
 from datetime import datetime, timedelta
+import os
 from jose import jwt, JWTError
+from dotenv import load_dotenv
 
-# Bu key'i .env'ye de koyabilirsin
-SECRET_KEY = "supersecretjwtkey"
+load_dotenv()
+# JWT imzalama anahtarı ortam değişkeninden okunabilir
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "supersecretjwtkey")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 

@@ -25,4 +25,8 @@ def get_sources(category: str, region: str) -> list[str]:
     if not cat_data:
         return []
 
-    return cat_data.get(region_key) or cat_data.get("global", [])
+    feeds = cat_data.get(region_key)
+    if feeds is None:
+        feeds = cat_data.get("global", [])
+
+    return list(feeds)

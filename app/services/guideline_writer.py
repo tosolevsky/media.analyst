@@ -5,6 +5,7 @@ from app.services.feedback_analysis_service import (
 )
 from app.services.llm_service import call_openrouter
 from app.services import firestore_service
+from app.core.logger import logger
 
 def is_testing_mode() -> bool:
     """Prod / test ayrımı."""
@@ -14,25 +15,25 @@ def is_testing_mode() -> bool:
 def update_live_guideline(user_email: str):
     """Kullanıcı feedbacklerinden canlı guideline üretir ve Firestore'a kaydeder."""
     try:
-        print(f"[GUIDELINE] Başlatıldı: {user_email}")
+        logger.info("[GUIDELINE] Başlatıldı: %s", user_email)
 
         feedbacks = fetch_user_feedbacks(user_email)
-        print(f"[GUIDELINE] {len(feedbacks)} adet feedback bulundu.")
+        logger.info("[GUIDELINE] %d adet feedback bulundu.", len(feedbacks))
         if not feedbacks:
-            print("[GUIDELINE] Feedback bulunamadı.")
+            logger.info("[GUIDELINE] Feedback bulunamadı.")
             return
 
         prompt = generate_guideline_prompt(feedbacks)
         guideline_text = call_openrouter(prompt).strip()
-        print("[GUIDELINE] LLM çıktı alındı.")
+        logger.info("[GUIDELINE] LLM çıktı alındı.")
 
         # Test modundaysa veritabanına yazma
         if is_testing_mode():
-            print("[TEST MODE] Guideline Firestore kaydı yapılmayacak.")
+            logger.info("[TEST MODE] Guideline Firestore kaydı yapılmayacak.")
             return
 
         firestore_service.save_guideline_to_firestore(user_email, guideline_text)
         firestore_service.save_milestone_to_firestore(user_email, guideline_text)
 
     except Exception as exc:
-        print(f"[GUIDELINE WARNING] update_live_guideline hata verdi: {exc}")
+        logger.warning("[GUIDELINE WARNING] update_live_guideline hata verdi: %s", exc)

@@ -1,4 +1,3 @@
-import os
 from app.services.feedback_analysis_service import (
     fetch_user_feedbacks,
     generate_guideline_prompt,
@@ -6,10 +5,7 @@ from app.services.feedback_analysis_service import (
 from app.services.llm_service import call_openrouter
 from app.services import firestore_service
 from app.core.logger import logger
-
-def is_testing_mode() -> bool:
-    """Prod / test ayrımı."""
-    return os.environ.get("TESTING", "0") == "1"
+from app.utils.environment import is_testing_mode
 
 
 def update_live_guideline(user_email: str):

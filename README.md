@@ -11,7 +11,11 @@ The service currently supports OpenAI, Anthropic and OpenRouter models for text 
    ```bash
    pip install -r requirements.txt
    ```
-3. Create a `.env` file or export the required environment variables. When running in production you need `SERVICE_ACCOUNT_JSON` for Firebase credentials.
+3. Create a `.env` file or export the required environment variables:
+   - `SERVICE_ACCOUNT_JSON` – Firebase credentials needed in production.
+   - `JWT_SECRET_KEY` – secret value used for signing JWT access tokens.
+   - `OPENROUTER_MODEL` – default OpenRouter model for guideline generation.
+   - `OPENROUTER_API_KEY` – API key for calling OpenRouter.
 4. Start the API server:
    ```bash
    uvicorn app.main:app --reload

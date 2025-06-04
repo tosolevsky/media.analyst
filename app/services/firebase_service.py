@@ -2,9 +2,10 @@ import os
 import json
 from dotenv import load_dotenv
 from app.core.logger import logger
+from app.utils.environment import is_testing_mode
 
 load_dotenv()
-TESTING = os.getenv("TESTING") == "1"
+TESTING = is_testing_mode()
 logger.info("FIREBASE TESTING: %s", TESTING)
 
 if TESTING:

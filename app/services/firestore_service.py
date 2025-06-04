@@ -41,3 +41,27 @@ def save_milestone_to_firestore(email: str, count: int, guideline: str):
 
     except Exception as e:
         print(f"[ERROR] save_milestone_to_firestore: {str(e)}")
+
+
+def save_feedback_to_firestore(data: dict):
+    """Save a feedback document under the ``feedback`` collection."""
+    firestore_db.collection("feedback").add(data)
+
+
+def save_user_profile(email: str, data: dict):
+    """Create or overwrite a user profile document."""
+    doc_ref = firestore_db.collection("profiles").document(email)
+    doc_ref.set(data)
+
+
+def get_user_profile(email: str) -> dict | None:
+    """Retrieve a user profile or return ``None`` if it doesn't exist."""
+    doc_ref = firestore_db.collection("profiles").document(email)
+    doc = doc_ref.get()
+    return doc.to_dict() if doc.exists else None
+
+
+def update_user_profile(email: str, data: dict):
+    """Update fields of an existing user profile document."""
+    doc_ref = firestore_db.collection("profiles").document(email)
+    doc_ref.update(data)

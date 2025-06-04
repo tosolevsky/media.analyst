@@ -4,11 +4,7 @@ from app.services.feedback_analysis_service import (
     generate_guideline_prompt,
 )
 from app.services.llm_service import call_openrouter
-from app.services.firestore_service import (
-    save_guideline_to_firestore,
-    save_milestone_to_firestore,
-)
-
+from app.services import firestore_service
 
 def is_testing_mode() -> bool:
     """Prod / test ayrımı."""
@@ -35,8 +31,8 @@ def update_live_guideline(user_email: str):
             print("[TEST MODE] Guideline Firestore kaydı yapılmayacak.")
             return
 
-        save_guideline_to_firestore(user_email, guideline_text)
-        save_milestone_to_firestore(user_email, guideline_text)
+        firestore_service.save_guideline_to_firestore(user_email, guideline_text)
+        firestore_service.save_milestone_to_firestore(user_email, guideline_text)
 
     except Exception as exc:
         print(f"[GUIDELINE WARNING] update_live_guideline hata verdi: {exc}")

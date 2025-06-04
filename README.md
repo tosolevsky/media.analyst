@@ -17,7 +17,7 @@ Media Analyst is a FastAPI based service for AI‑assisted content generation an
 
 ## Running Tests
 
-The tests use mocked Firebase services and expect the `TESTING` environment variable to be set. Run:
+The tests use mocked Firebase services and expect the `TESTING` environment variable to be set. Firebase libraries are only imported when this flag is unset, so tests run without Firebase credentials. Run:
 
 ```bash
 TESTING=1 pytest

@@ -1,21 +1,28 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app.api.routes import bot_routes
+from app.data.sources_data import RSS_FEEDS
 
-app = FastAPI(title="Media Analyst Backend", version="1.0")
 
-# CORS ayarları (geliştirme için tümüne izin veriyoruz)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+def get_sources(category: str, region: str) -> list[str]:
+    """Return RSS feed URLs for the given category and region.
 
-# Router ekleme
-app.include_router(bot_routes.router)
+    Parameters
+    ----------
+    category: str
+        News category key (case-insensitive).
+    region: str
+        Region key (case-insensitive).
 
-@app.get("/")
-def root():
-    return {"message": "Media Analyst Backend çalışıyor."}
+    Returns
+    -------
+    list[str]
+        List of RSS feed URLs. If the region is not defined for the
+        category, the function falls back to the ``global`` feeds. If the
+        category does not exist, an empty list is returned.
+    """
+    category_key = category.lower()
+    region_key = region.lower()
+
+    cat_data = RSS_FEEDS.get(category_key)
+    if not cat_data:
+        return []
+
+    return cat_data.get(region_key) or cat_data.get("global", [])

@@ -4,14 +4,12 @@ from app.services.feedback_service import save_feedback
 from app.schemas.feedback_schema import FeedbackRequest
 
 
-@patch("app.services.feedback_service.fetch_user_feedbacks")
 @patch("app.services.feedback_service.update_live_guideline")
 @patch("app.services.feedback_service.save_feedback_to_firestore")
-def test_save_feedback(mock_save, mock_guideline, mock_fetch):
+def test_save_feedback(mock_save, mock_guideline):
     # Firestore ve guideline fonksiyonlarını devre dışı bırak
     mock_save.return_value = None
     mock_guideline.return_value = None
-    mock_fetch.return_value = []
 
     # Geçerli bir geri bildirim örneği
     data = FeedbackRequest(

@@ -1,7 +1,6 @@
 from collections import Counter
 from app.constants.feedback_reasons import FEEDBACK_REASON_MAP
 from app.services.firebase_service import firestore_db
-from pathlib import Path
 
 def fetch_user_feedbacks(email: str, limit: int = 100):
     feedbacks = (

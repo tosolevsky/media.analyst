@@ -8,3 +8,5 @@ feedparser
 scikit-learn
 pandas
 joblib
+httpx
+python-jose

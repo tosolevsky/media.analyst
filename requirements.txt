@@ -4,6 +4,7 @@ python-dotenv
 firebase-admin
 pydantic
 requests
+httpx
 feedparser
 scikit-learn
 pandas

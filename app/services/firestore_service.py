@@ -1,19 +1,20 @@
 import os
 from datetime import datetime, timezone
 from app.services.firebase_service import firestore_db
+from app.core.logger import logger
 
 # Ortam kontrolü
 TESTING = os.getenv("TESTING") == "1"
 if TESTING:
-    print("FIREBASE TESTING: True")
+    logger.info("FIREBASE TESTING: True")
 else:
-    print("FIREBASE TESTING: False")
+    logger.info("FIREBASE TESTING: False")
 
 
 def save_guideline_to_firestore(email: str, guideline: str):
     try:
         if TESTING:
-            print("[TEST MODE] Guideline Firestore kaydı yapılmayacak.")
+            logger.info("[TEST MODE] Guideline Firestore kaydı yapılmayacak.")
             return
 
         firestore_db.collection("guidelines").add({
@@ -23,13 +24,13 @@ def save_guideline_to_firestore(email: str, guideline: str):
         })
 
     except Exception as e:
-        print(f"[ERROR] save_guideline_to_firestore: {str(e)}")
+        logger.warning("[ERROR] save_guideline_to_firestore: %s", str(e))
 
 
 def save_milestone_to_firestore(email: str, guideline: str):
     try:
         if TESTING:
-            print("[TEST MODE] Milestone Firestore kaydı yapılmayacak.")
+            logger.info("[TEST MODE] Milestone Firestore kaydı yapılmayacak.")
             return
 
         firestore_db.collection("milestones").add({
@@ -39,7 +40,7 @@ def save_milestone_to_firestore(email: str, guideline: str):
         })
 
     except Exception as e:
-        print(f"[ERROR] save_milestone_to_firestore: {str(e)}")
+        logger.warning("[ERROR] save_milestone_to_firestore: %s", str(e))
 
 
 def save_feedback_to_firestore(data: dict):
@@ -61,3 +62,6 @@ def get_user_profile(email: str) -> dict | None:
 
 
 def update_user_profile(email: str, data: dict):
+    """Update fields of a user profile document."""
+    doc_ref = firestore_db.collection("profiles").document(email)
+    doc_ref.update(data)

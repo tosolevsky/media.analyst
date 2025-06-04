@@ -4,6 +4,7 @@ import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
 from app.services.training_data_builder import load_feedback
+from app.core.logger import logger
 
 
 def feedback_to_dataframe(user_id: str):
@@ -17,7 +18,7 @@ def train_if_ready(user_id: str):
     df = feedback_to_dataframe(user_id)
 
     if len(df) < 5:
-        print(f"⚠️ Eğitim için en az 5 kayıt gerekli. Şu an: {len(df)}")
+        logger.warning("⚠️ Eğitim için en az 5 kayıt gerekli. Şu an: %d", len(df))
         return
 
     vectorizer = TfidfVectorizer()
@@ -31,4 +32,4 @@ def train_if_ready(user_id: str):
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
 
     joblib.dump(model, model_path)
-    print(f"✅ Model kaydedildi: {model_path}")
+    logger.info("✅ Model kaydedildi: %s", model_path)

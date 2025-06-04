@@ -6,6 +6,4 @@ pydantic
 requests
 httpx
 feedparser
-scikit-learn
-pandas
 joblib

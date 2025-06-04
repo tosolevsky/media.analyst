@@ -61,6 +61,3 @@ def get_user_profile(email: str) -> dict | None:
 
 
 def update_user_profile(email: str, data: dict):
-    """Update fields of an existing user profile document."""
-    doc_ref = firestore_db.collection("profiles").document(email)
-    doc_ref.update(data)

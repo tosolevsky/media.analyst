@@ -3,7 +3,7 @@ from app.services.guideline_writer import update_live_guideline
 
 @patch("app.services.guideline_writer.is_testing_mode", return_value=False)
 @patch("app.services.guideline_writer.fetch_user_feedbacks")
-@patch("app.services.guideline_writer.call_openrouter")
+@patch("app.services.llm_service.openrouter_client.call_openrouter")
 @patch("app.services.firestore_service.save_guideline_to_firestore")
 @patch("app.services.firestore_service.save_milestone_to_firestore")
 def test_update_live_guideline(

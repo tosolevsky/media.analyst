@@ -2,6 +2,8 @@
 
 Media Analyst is a FastAPI based service for AI‑assisted content generation and analysis. It integrates with Firebase for data storage and uses large language models to create short form text. The project exposes REST endpoints for authentication, bot responses and feedback collection.
 
+The service currently supports OpenAI, Anthropic and OpenRouter models for text generation.
+
 ## Setup
 
 1. Install Python 3.11 or later.
@@ -9,7 +11,7 @@ Media Analyst is a FastAPI based service for AI‑assisted content generation an
    ```bash
    pip install -r requirements.txt
    ```
-3. Create a `.env` file or export the required environment variables. When running in production you need `SERVICE_ACCOUNT_JSON` for Firebase credentials. You can set `JWT_SECRET_KEY` to override the default JWT signing key (`supersecretjwtkey`).
+3. Create a `.env` file or export the required environment variables. When running in production you need `SERVICE_ACCOUNT_JSON` for Firebase credentials.
 4. Start the API server:
    ```bash
    uvicorn app.main:app --reload

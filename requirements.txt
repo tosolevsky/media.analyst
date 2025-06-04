@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+firebase-admin
+pydantic
+requests
+feedparser
+scikit-learn
+pandas
+joblib

@@ -3,16 +3,17 @@ import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 from dotenv import load_dotenv
+from app.core.logger import logger
 
-print("DEBUG | TESTING =", os.getenv("TESTING"))
+logger.info("DEBUG | TESTING = %s", os.getenv("TESTING"))
 
 load_dotenv()
 
 TESTING = os.getenv("TESTING") == "1"
-print("FIREBASE TESTING:", TESTING)
+logger.info("FIREBASE TESTING: %s", TESTING)
 
 if TESTING:
-    print("TEST ortamı aktif, Firebase başlatılmayacak.")
+    logger.info("TEST ortamı aktif, Firebase başlatılmayacak.")
     firestore_db = None
 
 else:

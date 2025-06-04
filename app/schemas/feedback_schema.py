@@ -5,4 +5,5 @@ class FeedbackRequest(BaseModel):
     post_id: str
     sentiment: Literal["like", "dislike"]
     reasons: List[int] = Field(default_factory=list, max_length=10)
+    reasons: List[int] = Field(default_factory=list, max_items=10)
     comment: Optional[str] = Field(default=None, max_length=100)

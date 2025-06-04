@@ -26,7 +26,7 @@ def save_guideline_to_firestore(email: str, guideline: str):
         print(f"[ERROR] save_guideline_to_firestore: {str(e)}")
 
 
-def save_milestone_to_firestore(email: str, count: int, guideline: str):
+def save_milestone_to_firestore(email: str, guideline: str):
     try:
         if TESTING:
             print("[TEST MODE] Milestone Firestore kaydı yapılmayacak.")
@@ -34,9 +34,8 @@ def save_milestone_to_firestore(email: str, count: int, guideline: str):
 
         firestore_db.collection("milestones").add({
             "user_email": email,
-            "feedback_count": count,
             "guideline": guideline,
-            "timestamp": datetime.now(timezone.utc).isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         })
 
     except Exception as e:
